@@ -128,6 +128,8 @@ returnToACL <- predict_numberOfWins(value1, value2, value3, value4,
                                     value41)
 ```
 
+### Step 4: Within R, test the function
+
 You can confirm that this function works by inputting in manually the first row of the testing dataset. Caution: Do not put this into your A02_PredictModel.R, as ACL will only interpret the last item being returned after an RScript is ran.
 
 ```
@@ -142,7 +144,7 @@ testRowOne
 
 It should return 16.259, which is the predicted number of wins for this record. You have created the prediction mechanism and the call, which ACL will tap directly into when calling R.
 
-### Step 4: Within ACL Analytics, create the formula that calls the R script
+### Step 5: Within ACL Analytics, create the formula that calls the R script
 
 Almost there! Since the R script has been created, all we need to do within ACL is pass the correct values to R. Each column that we specify in ACL will become a valuex that gets passed to R.
 
