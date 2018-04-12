@@ -3,7 +3,7 @@ So you know how to use ACL and even got your feet wet with R and Machine Learnin
 
 We’re going to use to use ACL Analytics to **deploy** our model into production. This means that we have already trained a machine learning model we are happy with, to make predictions on incoming data. 
 
-**Why is this important?** You may be working with Data Scientists who can ‘train’ models for you but need to run it in your own ACL Analytics environment. You can take a trained model and call it directly from ACL, while leveraging the expertise that comes from your data scientist. You can then incorporate your own standard audit routines for follow-up and testing, without needing to worry about leaving your audit platform.
+**Why is this important?** You may be working with Data Scientists who can train models for you, but need to keep the results in your own ACL Analytics environment. You can take a trained model and call it directly from ACL, while leveraging the expertise that comes from your data scientist. You can then incorporate your own standard audit routines for follow-up and testing, without needing to worry about leaving your audit platform.
 
 This is my first attempt at writing a tutorial, let alone on such a crazy fun topic and mixing up my two favorite analysis platforms. If you have any suggestions for me, please let me know!
 
@@ -14,7 +14,7 @@ Special thanks to:
 ## Pre-requisites
 The below extended tutorial below actually revolves around the output from Rachael Tatman’s tutorial, https://www.kaggle.com/rtatman/picking-the-best-model-with-caret, and assumes that you have executed this tutorial already from start to finish.
 
-This tutorial specifically focuses on the **deployment** of a model. The entire universe of using R to clean data, create features, create a model, train a model, training vs. test data, understanding over/under fitting etc is at least a week long endeavor in itself. If you would like to learn how to do those above things, consider trying out https://www.kaggle.com/learn/r. 
+This tutorial specifically focuses on the **deployment** of a model. The entire universe of using R to clean data, create features, create a model, train a model, training vs. test data, understanding over/under fitting etc. is at least a week long endeavor in itself. If you would like to learn how to do those above things, consider starting out with https://www.kaggle.com/learn/r. 
 
 I would highly suggest you also install R Studio, and have the latest version of ACL Analytics (this tutorial has been tested on ACL Analytics 13.0.3). 
 
