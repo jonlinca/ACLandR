@@ -2,6 +2,6 @@ OPEN A00_TestingDataset
 
 COMMENT
 Call the RNUMERIC function, which will call the A02_PredictModel.R script, bring the result back with two decimals, and pass a ton of variables
-Note: Change the path of where the R Script and MDA Model file are kept to your own folder.
+Note: Change the path of where the R Script and MDA Model file are kept to your own folder. Also notice the direction of the slashes
 
 DEFINE FIELD c_predictedNumberOfWins COMPUTED RNUMERIC("a<-source('F:/ACL Temp/2018-04 ACL and R/ACL/A02_PredictModel.R');a[[1]]", 2, solo_KillDeathRatio, solo_TimeSurvived, solo_RoundsPlayed, solo_Top10s, solo_Top10Ratio, solo_Rating, solo_BestRating, solo_DamagePg, solo_HeadshotKillsPg, solo_HealsPg, solo_KillsPg, solo_MoveDistancePg, solo_RoadKillsPg, solo_TeamKillsPg, solo_TimeSurvivedPg, solo_Top10sPg, solo_Kills, solo_Assists, solo_Suicides, solo_TeamKills, solo_HeadshotKills, solo_HeadshotKillRatio, solo_VehicleDestroys, solo_RoadKills, solo_DailyKills, solo_WeeklyKills, solo_RoundMostKills, solo_MaxKillStreaks, solo_Days, solo_LongestTimeSurvived, solo_MostSurvivalTime, solo_AvgSurvivalTime, solo_WalkDistance, solo_RideDistance, solo_MoveDistance, solo_AvgWalkDistance, solo_AvgRideDistance, solo_LongestKill, solo_Heals, solo_Boosts, solo_DamageDealt)
