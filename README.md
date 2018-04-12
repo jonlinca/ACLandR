@@ -1,9 +1,9 @@
 ## Background
 So you know how to use ACL and even got your feet wet with R and Machine Learning. How can you apply what you’ve learned here to your strong data pipeline and analytic skills in ACL Analytics (or better yet, ACL Analytics Exchange)?
 
-We’re going to use to use ACL to “deploy” our model into production. This means that we’ve already trained a machine learning model we are happy with, to make predictions on incoming data. 
+We’re going to use to use ACL to **deploy** our model into production. This means that we’ve already trained a machine learning model we are happy with, to make predictions on incoming data. 
 
-Why is this important? You may be working with Data Scientists who can ‘train’ models for you but need to run it in your own ACL Analytics environment. You can take a trained model and call it directly from ACL, while leveraging the expertise that comes from your data scientist.
+Why is this important? You may be working with Data Scientists who can ‘train’ models for you but need to run it in your own ACL Analytics environment. You can take a trained model and call it directly from ACL, while leveraging the expertise that comes from your data scientist. You can then incorporate your own standard audit routines for follow-up and testing, without needing to worry about leaving your audit platform.
 
 This is my first attempt at writing a tutorial, let alone on such a crazy fun topic and mixing up my two favorite analysis platforms. If you have any suggestions for me, please let me know!
 
