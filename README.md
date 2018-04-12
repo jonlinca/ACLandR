@@ -1,7 +1,7 @@
 ## Background
-So you know how to use ACL and even got your feet wet with R and Machine Learning. How can you apply what you’ve learned here to your strong data pipeline and analytic skills in ACL Analytics (or better yet, ACL Analytics Exchange)?
+So you know how to use ACL and even got your feet wet with R and Machine Learning. How can you apply what you’ve learned in R to your strong analytic and data pipeline skills in ACL Analytics (or better yet, ACL Analytics Exchange)?
 
-We’re going to use to use ACL to **deploy** our model into production. This means that we’ve already trained a machine learning model we are happy with, to make predictions on incoming data. 
+We’re going to use to use ACL Analytics to **deploy** our model into production. This means that we have already trained a machine learning model we are happy with, to make predictions on incoming data. 
 
 **Why is this important?** You may be working with Data Scientists who can ‘train’ models for you but need to run it in your own ACL Analytics environment. You can take a trained model and call it directly from ACL, while leveraging the expertise that comes from your data scientist. You can then incorporate your own standard audit routines for follow-up and testing, without needing to worry about leaving your audit platform.
 
@@ -9,7 +9,7 @@ This is my first attempt at writing a tutorial, let alone on such a crazy fun to
 
 Special thanks to:
 * [Rachael Tatman's excellent tutorial](https://www.kaggle.com/rtatman/picking-the-best-model-with-caret) to which I build this extension off of.
-* [Ruben Rivero from ACL](https://www.acl.com/), who helped me when I ran out of fuel dealing with errors.
+* [Ruben Rivero from ACL](https://www.acl.com/), who helped me when I ran out of fuel dealing with errors, both technical and grammatical.
 
 ## Pre-requisites
 The below extended tutorial below actually revolves around the output from Rachael Tatman’s tutorial, https://www.kaggle.com/rtatman/picking-the-best-model-with-caret, and assumes that you have executed this tutorial already from start to finish.
@@ -18,10 +18,10 @@ This tutorial specifically focuses on the **deployment** of a model. The entire 
 
 I would highly suggest you also install R Studio, and have the latest version of ACL Analytics (this tutorial has been tested on ACL Analytics 13.0.3). 
 
-## Deploying your model
-Rachael’s tutorial concludes with a **trained model** that predicts how often a player will win in a solo match of the video game PLAYERUNKNOWN’S BATTLEGROUNDS. This is a **regression** problem, which gives us a continuous number output. This is different than a classification problem, which is discrete classes leading to a yes/no, true/false, or apple-orange-pineapple outcome. This model that we will leverage called the *tuned_model* within R, which should help predict the field *solo_WinRatio*.
+## Situtation: Time to deploy your model
+Rachael’s tutorial concludes with a **trained model** that predicts how often a player will win in a solo match of the video game [PLAYERUNKNOWN’S BATTLEGROUNDS](https://playbattlegrounds.com/). This is a **regression** problem, which gives a continuous number output. This is different than a classification problem, which is discrete classes leading to a yes/no, true/false, or apple-orange-pineapple outcome. This trained model is saved as the variable *tuned_model* within R, which is designed to predict the field *solo_WinRatio*.
 
-We know that we need to get R to return a number as an output to ACL. This leads us to looking up ACL’s [RNUMERIC() function](https://enablement.acl.com/helpdocs/analytics/13/scripting-guide/en-us/Content/lang_ref/functions/r_rnumeric.htm), which will give us a number that we can use in our analysis. Our goal is to use this function to forecast a number, based on the data we give it.
+We need to get R to return a number as an output to ACL. Referencing ACL’s online documentation, we see that the function [RNUMERIC()](https://enablement.acl.com/helpdocs/analytics/13/scripting-guide/en-us/Content/lang_ref/functions/r_rnumeric.htm) will return number that we can use in our analysis. 
 
 ```
 RNUMERIC(rScript|rCode, decimals <,field|value <,...n>>)
@@ -29,11 +29,13 @@ RNUMERIC(rScript|rCode, decimals <,field|value <,...n>>)
 
 The *RNUMERIC()* function calls for a rScript or rCode. Our R script should take an input (aka the predictor variables), call the model, make a prediction, and return it back to ACL for display. Lastly, the function needs to pass any number of ‘values’ to R, which will come from each record and data field in each column.
 
+**Our goal is to use this function to forecast a number, based on the data we give it.**
+
 ## Instructions
 ### Step 1: Within R, save the model
-Before you start, ensure that the [Kaggle tutorial](https://www.kaggle.com/rtatman/picking-the-best-model-with-caret) has been run.
+Before you start, ensure that the [Kaggle tutorial, Picking the best model with caret](https://www.kaggle.com/rtatman/picking-the-best-model-with-caret) has been run.
 
-At the conclusion of the tutorial, the model has already been trained, but hasn't been saved yet for long-term keeping. We can export the “trained” model from R so we can reuse it elsewhere.
+At the conclusion of the tutorial, the model has already been trained, but hasn't been saved yet for long-term keeping. We can export the **trained model** from R so we can reuse it elsewhere.
 
 ```
 save(tuned_model, file="tuned_model.rda")
@@ -54,7 +56,7 @@ IMPORT DELIMITED TO A00_TestingDataset " A00_TestingDataset.fil" FROM "testing.c
 
 You should end up with 70,317 records, which is the same number of records in the testing data set in R.
 
-There are 41 columns used for our model (note that the column *solo_WinRatio* is the predictor, so it is not included in the prediction and is not counted). In order to make a prediction, our model needs **exactly** the same number of columns as it used in training - in this case, all 41 columns. You will want to pass each one of these into the R function, that you specifically use to return a prediction.
+There are 41 columns used for our model (note that the column *solo_WinRatio* is the predictor, so it is not included in the prediction and is not counted). In order to make a prediction, our model needs **exactly the same number of columns** as it used in training - in this case, all 41 columns. You will want to pass each one of these into the R function that you specifically create, to return a prediction.
 
 Take some time to inspect the data – you will want to understand what the expected result is.
 
@@ -64,7 +66,7 @@ After you are done, save the ACL project.
 
 We need to create a function that returns a numeric value, which is the prediction. We must use the same columns that were used to create the model – in this case, all 41 columns. 
 
-Create a Rscript called *A02_PredictModel.R*, and save it (ideally in same directory as your ACL project).
+Create a Rscript called *A02_PredictModel.R*, and save the file in same directory as your ACL project.
 
 The below *predict_numberOfWins* function takes in each value as an argument, and at the same time, gives it a variable name which should map to the column we expect to pass. It then loads the saved model, prepares a one-row data frame to use for prediction, loads the required libraries. Finally, in one simple line, creates a prediction.
 
@@ -153,7 +155,7 @@ You have now created the prediction mechanism and the call, which ACL will tap d
 
 ### Step 5: Within ACL Analytics, create the formula that calls the R script
 
-Almost there! Since the R script has been created, all we need to do within ACL is pass the correct values to R. Each column that we specify in ACL will become a value*x* that gets passed to R.
+Almost there! Since the R script has been created, all we need to do within ACL is pass the correct values to R. Each column that we specify in ACL will become a value*x* that gets passed to R. Just like our prediction function, **the order of the columns matter**, so pay attention to which values are being passed into the function.
 
 ```
 OPEN A00_TestingDataset
@@ -189,4 +191,4 @@ Now that you've deployed and productionized your model, time to continue your ag
 
 Export them to an exception spreadsheet or upload them into ACL GRC or ACL Results Manager so you can follow up on them with your team, and feed any new findings back to your Data Scientist.
 
-If you're responsible for creating the model, you'll be adding new features all the time. Make sure when you load in a new RDA model, that you also update the value*x* columns that are feeding the function.
+If you're responsible for creating the model, you'll be adding new features all the time. Make sure when you load in a new RDA model, that you also update the value*x* columns that are feeding the function. Whether you make a linear regression or logisitic regression model, you can use the same principles to use ACL Analytics and R to predict outcomes.
