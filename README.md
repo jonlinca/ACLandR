@@ -10,16 +10,16 @@ This is my first attempt at writing a tutorial, let alone on such a crazy fun to
 Special thanks to [Ruben Rivero from ACL](https://www.acl.com/), who helped me when I ran out of fuel dealing with errors, and [Rachael Tatman's excellent tutorial](https://www.kaggle.com/rtatman/picking-the-best-model-with-caret) to which I build this extension off of.
 
 ## Pre-requisites
-This tutorial specifically focuses on the deployment of a model. The entire universe of using R to clean data, create features, create a model, train a model, training vs. test data, understanding over/under fitting etc is at least a week long endeavor in itself. If would like to learn how to do those above things, consider trying out https://www.kaggle.com/learn/r. 
+The below extended tutorial below actually revolves around the output from Rachael Tatman’s tutorial, https://www.kaggle.com/rtatman/picking-the-best-model-with-caret, and assumes that you have executed this tutorial already from start to finish.
 
-My extended tutorial below actually revolves around the output from Rachael Tatman’s tutorial, https://www.kaggle.com/rtatman/picking-the-best-model-with-caret, and assumes that you have executed this tutorial already from start to finish.
+This tutorial specifically focuses on the **deployment** of a model. The entire universe of using R to clean data, create features, create a model, train a model, training vs. test data, understanding over/under fitting etc is at least a week long endeavor in itself. If would like to learn how to do those above things, consider trying out https://www.kaggle.com/learn/r. 
 
 I would highly suggest you also install R Studio, and have the latest version of ACL Analytics (this tutorial tested on ACL Analytics 13.0.3). 
 
 ## Deploying your model
-Rachael’s tutorial concludes with a model that predicts how often a player will win in a solo match of the video game PLAYERUNKNOWN’S BATTLEGROUNDS. This is a regression problem, which gives us a continuous number output. This is different than a classification problem, which is discrete classes leading to a yes/no, true/false, or apple-orange-pineapple outcome. This model that we will leverage is our tuned_model, which should help predict the field solo_WinRatio.
+Rachael’s tutorial concludes with a **trained model** that predicts how often a player will win in a solo match of the video game PLAYERUNKNOWN’S BATTLEGROUNDS. This is a **regression** problem, which gives us a continuous number output. This is different than a classification problem, which is discrete classes leading to a yes/no, true/false, or apple-orange-pineapple outcome. This model that we will leverage called the *tuned_model* within R, which should help predict the field *solo_WinRatio*.
 
-We know that we need to get R to give us a “number” as an output. This leads us to looking up ACL’s RNUMERIC() function, which will give us a number that we can use in our analysis. Our goal is to use this function to forecast a number, based on the data we give it.
+We know that we need to get R to return a number as an output to ACL. This leads us to looking up ACL’s [RNUMERIC() function](https://enablement.acl.com/helpdocs/analytics/13/scripting-guide/en-us/Content/lang_ref/functions/r_rnumeric.htm), which will give us a number that we can use in our analysis. Our goal is to use this function to forecast a number, based on the data we give it.
 
 ```
 RNUMERIC(rScript|rCode, decimals <,field|value <,...n>>)
@@ -29,21 +29,21 @@ The RNUMERIC() function calls for an “rScript” or “rCode”. Our R script 
 
 ## Instructions
 ### Step 1: Within R, Save the model
-Before you start, ensure that the Kaggle tutorial has been ran.
-At the end of the tutorial, the model has already been trained. We can export the “trained” model from R so we can reuse it elsewhere.
+Before you start, ensure that the [Kaggle tutorial](https://www.kaggle.com/rtatman/picking-the-best-model-with-caret) has been ran.
+At the conclusion of the tutorial, the model has already been trained, but hasn't been saved yet for long-term keeping. We can export the “trained” model from R so we can reuse it elsewhere.
 
 ```
 save(tuned_model, file="tuned_model.rda")
 ```
 
-Since we are using ACL Analytics to create our predictions, we can also export the testing data set from R to load into ACL:
+As we are using ACL Analytics to create our predictions, we can also export the testing data set from R, which we will load into ACL:
 
 ```
 write.csv(testing, file = "testing.csv")
 ```
 
 ### Step 2: Within ACL Analytics, Import testing data set
-We will import the testing.csv file (you can use the following script if you like):
+We will import the testing.csv file:
 
 ```
 IMPORT DELIMITED TO A00_TestingDataset " A00_TestingDataset.fil" FROM "testing.csv" 0 SEPARATOR "," QUALIFIER '"' CONSECUTIVE STARTLINE 1 KEEPTITLE CRCLEAR LFCLEAR ALLFIELDS
@@ -51,9 +51,9 @@ IMPORT DELIMITED TO A00_TestingDataset " A00_TestingDataset.fil" FROM "testing.c
 
 You should end up with 70,317 records, which is the same number of records in the testing data set in R.
 
-There are 41 columns used for our model (note that the column “solo_WinRatio” is the predictor, so its not included in the prediction). In order to make a prediction, our model needs exactly all 41 columns. You will want to pass each one of these into a R function, that you specifically use to return a prediction.
+There are 41 columns used for our model (note that the column *solo_WinRatio* is the predictor, so its not included in the prediction and is not counted). In order to make a prediction, our model needs **exactly** the same number of columns as it used in training - in this case, all 41 columns. You will want to pass each one of these into a R function, that you specifically use to return a prediction.
 
-Inspect the data – you will want to understand what the expected result is.
+Take some time to inspect the data – you will want to understand what the expected result is.
 
 ### Step 3: Within R, create the function that ACL will use to call for a prediction
 
