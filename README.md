@@ -14,9 +14,9 @@ Special thanks to:
 ## Pre-requisites
 The below extended tutorial below actually revolves around the output from Rachael Tatman’s tutorial, https://www.kaggle.com/rtatman/picking-the-best-model-with-caret, and assumes that you have executed this tutorial already from start to finish.
 
-This tutorial specifically focuses on the **deployment** of a model. The entire universe of using R to clean data, create features, create a model, train a model, training vs. test data, understanding over/under fitting etc is at least a week long endeavor in itself. If would like to learn how to do those above things, consider trying out https://www.kaggle.com/learn/r. 
+This tutorial specifically focuses on the **deployment** of a model. The entire universe of using R to clean data, create features, create a model, train a model, training vs. test data, understanding over/under fitting etc is at least a week long endeavor in itself. If you would like to learn how to do those above things, consider trying out https://www.kaggle.com/learn/r. 
 
-I would highly suggest you also install R Studio, and have the latest version of ACL Analytics (this tutorial tested on ACL Analytics 13.0.3). 
+I would highly suggest you also install R Studio, and have the latest version of ACL Analytics (this tutorial has been tested on ACL Analytics 13.0.3). 
 
 ## Deploying your model
 Rachael’s tutorial concludes with a **trained model** that predicts how often a player will win in a solo match of the video game PLAYERUNKNOWN’S BATTLEGROUNDS. This is a **regression** problem, which gives us a continuous number output. This is different than a classification problem, which is discrete classes leading to a yes/no, true/false, or apple-orange-pineapple outcome. This model that we will leverage called the *tuned_model* within R, which should help predict the field *solo_WinRatio*.
@@ -27,11 +27,12 @@ We know that we need to get R to return a number as an output to ACL. This leads
 RNUMERIC(rScript|rCode, decimals <,field|value <,...n>>)
 ```
 
-The *RNUMERIC()* function calls for a rScript or rCode. Our R script should take an input (aka the predictor variables), call the model, make a prediction, and return it back to ACL for display. Lastly, the function need to pass any number of ‘values’ to R, which will come from each record and data field in each column.
+The *RNUMERIC()* function calls for a rScript or rCode. Our R script should take an input (aka the predictor variables), call the model, make a prediction, and return it back to ACL for display. Lastly, the function needs to pass any number of ‘values’ to R, which will come from each record and data field in each column.
 
 ## Instructions
-### Step 1: Within R, Save the model
-Before you start, ensure that the [Kaggle tutorial](https://www.kaggle.com/rtatman/picking-the-best-model-with-caret) has been ran.
+### Step 1: Within R, save the model
+Before you start, ensure that the [Kaggle tutorial](https://www.kaggle.com/rtatman/picking-the-best-model-with-caret) has been run.
+
 At the conclusion of the tutorial, the model has already been trained, but hasn't been saved yet for long-term keeping. We can export the “trained” model from R so we can reuse it elsewhere.
 
 ```
@@ -53,7 +54,7 @@ IMPORT DELIMITED TO A00_TestingDataset " A00_TestingDataset.fil" FROM "testing.c
 
 You should end up with 70,317 records, which is the same number of records in the testing data set in R.
 
-There are 41 columns used for our model (note that the column *solo_WinRatio* is the predictor, so its not included in the prediction and is not counted). In order to make a prediction, our model needs **exactly** the same number of columns as it used in training - in this case, all 41 columns. You will want to pass each one of these into a R function, that you specifically use to return a prediction.
+There are 41 columns used for our model (note that the column *solo_WinRatio* is the predictor, so it is not included in the prediction and is not counted). In order to make a prediction, our model needs **exactly** the same number of columns as it used in training - in this case, all 41 columns. You will want to pass each one of these into the R function, that you specifically use to return a prediction.
 
 Take some time to inspect the data – you will want to understand what the expected result is.
 
@@ -65,7 +66,7 @@ We need to create a function that returns a numeric value, which is the predicti
 
 Create a Rscript called *A02_PredictModel.R*, and save it (ideally in same directory as your ACL project).
 
-The below *predict_numberOfWins* function takes in each value as an argument, and at the same time, gives it a variable name which should map to the column we expect to pass it. It then loads the saved model, prepares a one-row data frame to use for prediction, loads the required libraries. Finally, in one simple line, creates a prediction.
+The below *predict_numberOfWins* function takes in each value as an argument, and at the same time, gives it a variable name which should map to the column we expect to pass. It then loads the saved model, prepares a one-row data frame to use for prediction, loads the required libraries. Finally, in one simple line, creates a prediction.
 
 ```
 predict_numberOfWins <- function(solo_KillDeathRatio, solo_TimeSurvived, solo_RoundsPlayed,
@@ -167,7 +168,7 @@ In ACL, add the column to the view, and you’ll hopefully see this pop up:
  
 ![Screenshot of ACL image](ACL%20Screenshot%20of%20Called%20Model.PNG?raw=true)
  
-You can see that I specified two decimals, so its rounding my result to 16.26. But its right on the money as it reflects the expected R result.
+You can see that I specified two decimals, so it has rounded the result to 16.26. But its right on the money as it reflects the expected R result.
 
 ## Troubleshooting
 ```
