@@ -9,7 +9,7 @@ This is my first attempt at writing a tutorial, let alone on such a crazy fun to
 
 Special thanks to:
 * [Rachael Tatman's excellent tutorial](https://www.kaggle.com/rtatman/picking-the-best-model-with-caret) to which I build this extension off of.
-* [Ruben Rivero from ACL](https://www.acl.com/), who helped me when I ran out of fuel dealing with errors,
+* [Ruben Rivero from ACL](https://www.acl.com/), who helped me when I ran out of fuel dealing with errors.
 
 ## Pre-requisites
 The below extended tutorial below actually revolves around the output from Rachael Tatman’s tutorial, https://www.kaggle.com/rtatman/picking-the-best-model-with-caret, and assumes that you have executed this tutorial already from start to finish.
