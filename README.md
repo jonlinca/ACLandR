@@ -7,7 +7,9 @@ Why is this important? You may be working with Data Scientists who can ‘train�
 
 This is my first attempt at writing a tutorial, let alone on such a crazy fun topic and mixing up my two favorite analysis platforms. If you have any suggestions for me, please let me know!
 
-Special thanks to [Ruben Rivero from ACL](https://www.acl.com/), who helped me when I ran out of fuel dealing with errors, and [Rachael Tatman's excellent tutorial](https://www.kaggle.com/rtatman/picking-the-best-model-with-caret) to which I build this extension off of.
+Special thanks to:
+* [Rachael Tatman's excellent tutorial](https://www.kaggle.com/rtatman/picking-the-best-model-with-caret) to which I build this extension off of.
+* [Ruben Rivero from ACL](https://www.acl.com/), who helped me when I ran out of fuel dealing with errors,
 
 ## Pre-requisites
 The below extended tutorial below actually revolves around the output from Rachael Tatman’s tutorial, https://www.kaggle.com/rtatman/picking-the-best-model-with-caret, and assumes that you have executed this tutorial already from start to finish.
@@ -25,7 +27,7 @@ We know that we need to get R to return a number as an output to ACL. This leads
 RNUMERIC(rScript|rCode, decimals <,field|value <,...n>>)
 ```
 
-The RNUMERIC() function calls for an “rScript” or “rCode”. Our R script should take an input (aka the predictor variables), call the model, make a prediction, and return it back to ACL for display. Lastly, the function need to pass any number of ‘values’ to R, which will come from each record and data field in each column.
+The *RNUMERIC()* function calls for a rScript or rCode. Our R script should take an input (aka the predictor variables), call the model, make a prediction, and return it back to ACL for display. Lastly, the function need to pass any number of ‘values’ to R, which will come from each record and data field in each column.
 
 ## Instructions
 ### Step 1: Within R, Save the model
@@ -42,8 +44,8 @@ As we are using ACL Analytics to create our predictions, we can also export the 
 write.csv(testing, file = "testing.csv")
 ```
 
-### Step 2: Within ACL Analytics, Import testing data set
-We will import the testing.csv file:
+### Step 2: Within ACL Analytics, import testing data set
+Create a new ACL project, and import the testing.csv file:
 
 ```
 IMPORT DELIMITED TO A00_TestingDataset " A00_TestingDataset.fil" FROM "testing.csv" 0 SEPARATOR "," QUALIFIER '"' CONSECUTIVE STARTLINE 1 KEEPTITLE CRCLEAR LFCLEAR ALLFIELDS
@@ -55,11 +57,13 @@ There are 41 columns used for our model (note that the column *solo_WinRatio* is
 
 Take some time to inspect the data – you will want to understand what the expected result is.
 
+After you are done, save the ACL project.
+
 ### Step 3: Within R, create the function that ACL will use to call for a prediction
 
 We need to create a function that returns a numeric value, which is the prediction. We must use the same columns that were used to create the model – in this case, all 41 columns. 
 
-Create a Rscript called *A02_PredictModel.R*. 
+Create a Rscript called *A02_PredictModel.R*, and save it (ideally in same directory as your ACL project).
 
 The below *predict_numberOfWins* function takes in each value as an argument, and at the same time, gives it a variable name which should map to the column we expect to pass it. It then loads the saved model, prepares a one-row data frame to use for prediction, loads the required libraries. Finally, in one simple line, creates a prediction.
 
