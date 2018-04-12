@@ -159,6 +159,8 @@ DEFINE FIELD c_predictedNumberOfWins COMPUTED RNUMERIC("a<-source('A02_PredictMo
 
 In ACL, add the column to the view, and you’ll hopefully see this pop up:
  
+![Screenshot of ACL image](ACL%20Screenshot%20of%20Called%20Model.PNG?raw=true)
+ 
 You can see that I specified two decimals, so its rounding my result to 16.26. But its right on the money, and it reflects the R result.
 
 ## Troubleshooting
@@ -166,3 +168,8 @@ You can see that I specified two decimals, so its rounding my result to 16.26. B
 The R script is not valid.   Error detail: Error in readChar(con, 5L, useBytes = TRUE) : cannot open the connection
 ```
 Double check your paths in both the R script and ACL code. The full path needs to be stated.
+
+```
+Error detail: Error in UseMethod("predict"): no applicable method for 'predict' applied to an object class of "randomForest"
+```
+The function built within R, when its called, can't see 'predict'. This is because it has not been loaded. Load it within the function with library(randomForest).
