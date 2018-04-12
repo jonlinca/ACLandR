@@ -3,7 +3,7 @@ So you know how to use ACL and even got your feet wet with R and Machine Learnin
 
 We’re going to use to use ACL to **deploy** our model into production. This means that we’ve already trained a machine learning model we are happy with, to make predictions on incoming data. 
 
-Why is this important? You may be working with Data Scientists who can ‘train’ models for you but need to run it in your own ACL Analytics environment. You can take a trained model and call it directly from ACL, while leveraging the expertise that comes from your data scientist. You can then incorporate your own standard audit routines for follow-up and testing, without needing to worry about leaving your audit platform.
+**Why is this important?** You may be working with Data Scientists who can ‘train’ models for you but need to run it in your own ACL Analytics environment. You can take a trained model and call it directly from ACL, while leveraging the expertise that comes from your data scientist. You can then incorporate your own standard audit routines for follow-up and testing, without needing to worry about leaving your audit platform.
 
 This is my first attempt at writing a tutorial, let alone on such a crazy fun topic and mixing up my two favorite analysis platforms. If you have any suggestions for me, please let me know!
 
@@ -179,3 +179,13 @@ Double check your paths in both the R script and ACL code. The full path needs t
 Error detail: Error in UseMethod("predict"): no applicable method for 'predict' applied to an object class of "randomForest"
 ```
 The function built within R, when its called, can't see 'predict'. This is because it has not been loaded. Load it within the function with library(randomForest).
+
+## What's next?
+Now that you've deployed and productionized your model, time to continue your agile thinking about your audit analytics pipeline. 
+
+* Are you responsible for monitoring the health of a model?
+* Are there any exceptions that are higher than you predicted?
+
+Export them to an exception spreadsheet or upload them into ACL GRC or ACL Results Manager so you can follow up on them with your team, and feed any new findings back to your Data Scientist.
+
+If you're responsible for creating the model, you'll be adding new features all the time. Make sure when you load in a new RDA model, that you also update the value*x* columns that are feeding the function.
