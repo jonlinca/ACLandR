@@ -174,12 +174,12 @@ You can see that I specified two decimals, so it has rounded the result to 16.26
 
 ## Troubleshooting
 ```
-The R script is not valid.   Error detail: Error in readChar(con, 5L, useBytes = TRUE) : cannot open the connection
+The R script is not valid. Error detail: Error in readChar(con, 5L, useBytes = TRUE) : cannot open the connection
 ```
 Double check your paths in both the R script and ACL code. The full path needs to be stated.
 
 ```
-Error detail: Error in UseMethod("predict"): no applicable method for 'predict' applied to an object class of "randomForest"
+The R script is not valid. Error detail: Error in UseMethod("predict"): no applicable method for 'predict' applied to an object class of "randomForest"
 ```
 The function built within R, when its called, can't see 'predict'. This is because it has not been loaded. Load it within the function with library(randomForest).
 
