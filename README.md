@@ -14,11 +14,11 @@ Special thanks to:
 * [Ruben Rivero from ACL](https://www.acl.com/), who helped me when I ran out of fuel dealing with errors, both technical and grammatical.
 
 ## Pre-requisites
-The below extended tutorial below actually revolves around the output from Rachael Tatman’s tutorial, https://www.kaggle.com/rtatman/picking-the-best-model-with-caret, and assumes that you have executed this tutorial already from start to finish.
+Before you begin, please complete Rachael Tatman’s tutorial, https://www.kaggle.com/rtatman/picking-the-best-model-with-caret from start to finish. The below extended tutorial begins with the final output from her tutorial.
 
-This tutorial specifically focuses on the **deployment** of a model. The entire universe of using R to clean data, create features, create a model, train a model, training vs. test data, understanding over/under fitting etc. is at least a week long endeavor in itself. If you would like to learn how to do those above things, consider starting out with https://www.kaggle.com/learn/r. 
+This tutorial focuses on a narrow component of development: the **deployment** of a model. The entire universe of using R to clean data, create features, create models, train models, training vs. test data, understanding over/under fitting etc. is a journey in itself. If you would like to learn how to do those above things, consider starting out with https://www.kaggle.com/learn/r. 
 
-I would highly suggest you also install R Studio, and have the latest version of ACL Analytics (this tutorial has been tested on ACL Analytics 13.0.3). 
+I would highly encourage you to install R Studio, and have the latest version of ACL Analytics (this tutorial has been tested on ACL Analytics 13.0.3). 
 
 ## Situtation: Time to deploy your model
 Rachael’s tutorial concludes with a **trained model** that predicts how often a player will win in a solo match of the video game [PLAYERUNKNOWN’S BATTLEGROUNDS](https://playbattlegrounds.com/). This is a **regression** problem, which gives a continuous number output. This is different than a classification problem, which is discrete classes leading to a yes/no, true/false, or apple-orange-pineapple outcome. This trained model is saved as the variable *tuned_model* within R, which is designed to predict the field *solo_WinRatio*.
