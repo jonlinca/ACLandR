@@ -59,9 +59,9 @@ Take some time to inspect the data – you will want to understand what the expe
 
 We need to create a function that returns a numeric value, which is the prediction. We must use the same columns that were used to create the model – in this case, all 41 columns. 
 
-Create a Rscript called “A02_PredictModel.R”. 
+Create a Rscript called *A02_PredictModel.R*. 
 
-The below “predict_numberOfWins” function takes in each value as an argument, and at the same time, gives it a variable name which should map to the column we expect to pass it. It then loads the saved model, creates a one-row data frame for prediction, loads the required libraries. Finally, in one simple line, creates a prediction.
+The below *predict_numberOfWins* function takes in each value as an argument, and at the same time, gives it a variable name which should map to the column we expect to pass it. It then loads the saved model, prepares a one-row data frame to use for prediction, loads the required libraries. Finally, in one simple line, creates a prediction.
 
 ```
 predict_numberOfWins <- function(solo_KillDeathRatio, solo_TimeSurvived, solo_RoundsPlayed,
@@ -109,9 +109,9 @@ predict_numberOfWins <- function(solo_KillDeathRatio, solo_TimeSurvived, solo_Ro
 }
 ```
 
-Note: For the load function - You need to specify exactly where your model lives. You can improve this script by taking the relative location of the RScript, which is on my to-do list.
+**Note:** For the load function - You need to specify exactly where your model lives. You can improve this script by taking the relative location of the RScript, which is on my to-do list.
 
-Once the function itself has been created, then you create the call to the function within the script itself. The script is expecting a series of values from ACL’s RNumeric function, which comes from ACL in the form of valuex, x being an incremental number.
+Once the function itself has been created, then you create the call to the function within the script itself. The script is expecting a series of values from ACL’s RNumeric function, which comes from ACL in the form of value*x*, *x* being an incremental number.
 
 ```
 #Call the function, based on value inputs from ACL. Save the result - this goes back to ACL
@@ -130,7 +130,7 @@ returnToACL <- predict_numberOfWins(value1, value2, value3, value4,
 
 ### Step 4: Within R, test the function
 
-You can confirm that this function works by inputting in manually the first row of the testing dataset. Caution: Do not put this into your A02_PredictModel.R, as ACL will only interpret the last item being returned after an RScript is ran.
+You can confirm that this function works by inputting in manually the first row of the testing dataset. **Note:** Do not save this into your *A02_PredictModel.R*, as ACL will only interpret the last item being returned after an RScript is ran.
 
 ```
 testRowOne <- predict_numberOfWins(3.14, 18469.14, 17, 4, 23.5, 
@@ -142,11 +142,13 @@ testRowOne <- predict_numberOfWins(3.14, 18469.14, 17, 4, 23.5,
 testRowOne
 ```
 
-It should return 16.259, which is the predicted number of wins for this record. You have created the prediction mechanism and the call, which ACL will tap directly into when calling R.
+It should return 16.259, which is the predicted number of wins for this record. 
+
+You have now created the prediction mechanism and the call, which ACL will tap directly into when calling R.
 
 ### Step 5: Within ACL Analytics, create the formula that calls the R script
 
-Almost there! Since the R script has been created, all we need to do within ACL is pass the correct values to R. Each column that we specify in ACL will become a valuex that gets passed to R.
+Almost there! Since the R script has been created, all we need to do within ACL is pass the correct values to R. Each column that we specify in ACL will become a value*x* that gets passed to R.
 
 ```
 OPEN A00_TestingDataset
@@ -161,7 +163,7 @@ In ACL, add the column to the view, and you’ll hopefully see this pop up:
  
 ![Screenshot of ACL image](ACL%20Screenshot%20of%20Called%20Model.PNG?raw=true)
  
-You can see that I specified two decimals, so its rounding my result to 16.26. But its right on the money, and it reflects the R result.
+You can see that I specified two decimals, so its rounding my result to 16.26. But its right on the money as it reflects the expected R result.
 
 ## Troubleshooting
 ```
