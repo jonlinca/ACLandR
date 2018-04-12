@@ -16,7 +16,7 @@ predict_numberOfWins <- function(solo_KillDeathRatio, solo_TimeSurvived, solo_Ro
   #This function will take in a series of passed variables from ACL, and return a prediction
   
   # Load the tuned model, which our data scientist may provide
-  load(file = "F:/ACL Temp/2018-04 ACL and R test/ACL/tuned_model.rda")
+  load(file = "F:/ACL Temp/2018-04 ACL and R/ACL/tuned_model.rda")
 
   # Create a one-row data frame, based on the features we are using to predict
   predictionDataFrame <- c(solo_KillDeathRatio, solo_TimeSurvived, solo_RoundsPlayed,
