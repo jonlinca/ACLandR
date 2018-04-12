@@ -41,11 +41,13 @@ At the conclusion of the tutorial, the model has already been trained, but hasn'
 save(tuned_model, file="tuned_model.rda")
 ```
 
-As we are using ACL Analytics to create our predictions, we can also export the testing data set from R, which we will load into ACL:
+As we are using ACL Analytics to create our predictions, we can also export the testing data set from R, which we will load into ACL. The dataframe is conveniently called *testing*:
 
 ```
 write.csv(testing, file = "testing.csv")
 ```
+
+Make sure these two files, *tuned_model.rda* and *testing.csv*, end up in your ACL Analytics project.
 
 ### Step 2: Within ACL Analytics, import testing data set
 Create a new ACL project, and import the testing.csv file:
@@ -60,7 +62,7 @@ There are 41 columns used for our model (note that the column *solo_WinRatio* is
 
 Take some time to inspect the data – you will want to understand what the expected result is.
 
-After you are done, save the ACL project.
+After you are done, save the ACL project. If you haven't yet, move *tuned_model.rda* and *testing.csv* into the same folder as your ACL Analytics project.
 
 ### Step 3: Within R, create the function that ACL will use to call for a prediction
 
