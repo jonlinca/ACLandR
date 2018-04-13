@@ -5,7 +5,7 @@ So you know how to use ACL and even got your feet wet with R and Machine Learnin
 
 We’re going to use to use ACL Analytics to **deploy** our model into production. This means that we have already trained a machine learning model we are happy with, to make predictions on incoming data. 
 
-**Why is this important?** You may be working with Data Scientists who can train models for you, but need to keep the results in your own ACL Analytics environment. You can take a trained model and call it directly from ACL, while leveraging the expertise that comes from your data scientist. You can then incorporate your own standard audit routines for follow-up and testing, without needing to worry about leaving your audit platform.
+**Why is this important?** You may be working with Data Scientists who can train models for you, but need to keep the results in your own ACL Analytics environment. You can take a trained model and call it directly from ACL, while leveraging the expertise that comes from your data scientist. Incorporate your own standard audit routines for follow-up and testing, without needing to worry about leaving your audit platform.
 
 This is my first attempt at writing a tutorial, let alone on such a crazy fun topic and mixing up my two favorite analysis platforms. If you have any suggestions for me, please let me know!
 
@@ -64,7 +64,7 @@ There are 41 columns used for our model (note that the column *solo_WinRatio* is
 
 Take some time to inspect the data – you will want to understand what the expected result is.
 
-After you are done, save the ACL project. If you haven't yet, move *tuned_model.rda* and *testing.csv* into the same folder as your ACL Analytics project.
+After you are done, save the ACL project. If you haven't yet, move *tuned_model.rda* into the same folder as your ACL Analytics project.
 
 ### Step 3: Within R, create the function that ACL will use to call for a prediction
 
@@ -122,7 +122,7 @@ predict_numberOfWins <- function(solo_KillDeathRatio, solo_TimeSurvived, solo_Ro
 
 **Note:** For the load function - You need to specify exactly where your model lives. You can improve this script by taking the relative location of the RScript, which is on my to-do list.
 
-Once the function itself has been created, then you create the call to the function within the script itself. The script is expecting a series of values from ACL’s RNumeric function, which comes from ACL in the form of value*x*, *x* being an incremental number.
+Once the function *predict_numberOfWins* has been created, then you create the call to the function within the script itself. The script is the code ran at runtime - in this case, it is called when ACL’s *RNumeric()* function is used. Each argument comes from ACL in the form of value*x*, *x* being an incremental number.
 
 ```
 #Call the function, based on value inputs from ACL. Save the result - this goes back to ACL
@@ -141,7 +141,7 @@ returnToACL <- predict_numberOfWins(value1, value2, value3, value4,
 
 ### Step 4: Within R, test the function
 
-You can confirm that this function works by inputting in manually the first row of the testing dataset. **Note:** Do not save this into your *A02_PredictModel.R*, as ACL will only interpret the last item being returned after an RScript is ran.
+You can confirm that this function works by inputting in manually the first row of the testing dataset. **Note:** Do not save this into your *A02_PredictModel.R*, as ACL Analytics will only interpret the last item being returned after an RScript is ran.
 
 ```
 testRowOne <- predict_numberOfWins(3.14, 18469.14, 17, 4, 23.5, 
