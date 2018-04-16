@@ -5,9 +5,7 @@ So you know how to use ACL and even got your feet wet with R and Machine Learnin
 
 We’re going to use to use ACL Analytics to **deploy** our model into production. This means that we have already trained a machine learning model we are happy with, to make predictions on incoming data. 
 
-**Why is this important?** You may be working with Data Scientists who can train models for you, but need to keep the results in your own ACL Analytics environment. You can take a trained model and call it directly from ACL, while leveraging the expertise that comes from your data scientist. Incorporate your own standard audit routines for follow-up and testing, without needing to worry about leaving your audit platform.
-
-This is my first attempt at writing a tutorial, let alone on such a crazy fun topic and mixing up my two favorite analysis platforms. If you have any suggestions for me, please let me know!
+**Why is this important?** You may be working with Data Scientists who can train models for you, but need to keep the results in your own ACL Analytics environment. You can take a trained model and call it directly from ACL Analytics, while leveraging the expertise that comes from your data scientist. Incorporate your own standard audit routines for follow-up and testing, without needing to leave your audit platform.
 
 Special thanks to:
 * [Rachael Tatman's excellent tutorial](https://www.kaggle.com/rtatman/picking-the-best-model-with-caret) to which I build this extension off of.
@@ -21,7 +19,12 @@ This tutorial focuses on a narrow component of development: the **deployment** o
 I would highly encourage you to install R Studio, and have the latest version of ACL Analytics (this tutorial has been tested on ACL Analytics 13.0.3). 
 
 ## Situtation: Time to deploy your model
-Rachael’s tutorial concludes with a **trained model** that predicts how often a player will win in a solo match of the video game [PLAYERUNKNOWN’S BATTLEGROUNDS](https://playbattlegrounds.com/). This is a **regression** problem, which gives a continuous number output. This is different than a classification problem, which is discrete classes leading to a yes/no, true/false, or apple-orange-pineapple outcome. This trained model is saved as the variable *tuned_model* within R, which is designed to predict the field *solo_WinRatio*.
+
+![PUBG Logo - Big Explosions](pubg.gif?raw=true)
+
+Rachael’s tutorial concludes with a **trained model** that predicts how often a player will win in a solo match of the video game [PLAYERUNKNOWN’S BATTLEGROUNDS](https://playbattlegrounds.com/).
+
+This is a **regression** problem, which gives a continuous number output. This is different than a classification problem, which is discrete classes leading to a yes/no, true/false, or apple-orange-pineapple outcome. This trained model is saved as the variable *tuned_model* within R, which is designed to predict the field *solo_WinRatio*.
 
 We need to get R to return a number as an output to ACL. Referencing ACL’s online documentation, we see that the function [RNUMERIC()](https://enablement.acl.com/helpdocs/analytics/13/scripting-guide/en-us/Content/lang_ref/functions/r_rnumeric.htm) will return number that we can use in our analysis. 
 
@@ -49,7 +52,9 @@ As we are using ACL Analytics to create our predictions, we can also export the 
 write.csv(testing, file = "testing.csv")
 ```
 
-Make sure these two files, *tuned_model.rda* and *testing.csv*, end up in your ACL Analytics project.
+![Files where ACL Analytics project will be](Step%201%20-%20Files%20in%20ACL%20Project.PNG?raw=true)
+
+Make sure these two files, *tuned_model.rda* and *testing.csv*, end up in your ACL Analytics project folder.
 
 ### Step 2: Within ACL Analytics, import testing data set
 Create a new ACL project, and import the testing.csv file:
@@ -57,6 +62,8 @@ Create a new ACL project, and import the testing.csv file:
 ```
 IMPORT DELIMITED TO A00_TestingDataset " A00_TestingDataset.fil" FROM "testing.csv" 0 SEPARATOR "," QUALIFIER '"' CONSECUTIVE STARTLINE 1 KEEPTITLE CRCLEAR LFCLEAR ALLFIELDS
 ```
+
+![Control total count in ACL](Step%202%20-%20ACL%20Import.PNG?raw=true)
 
 You should end up with 70,317 records, which is the same number of records in the testing data set in R.
 
@@ -153,6 +160,8 @@ testRowOne <- predict_numberOfWins(3.14, 18469.14, 17, 4, 23.5,
 testRowOne
 ```
 
+![Test the model on the first row](Step%204%20-%20R%20Model%20result.PNG?raw=true)
+
 It should return 16.259, which is the predicted number of wins for this record. 
 
 You have now created the prediction mechanism and the call, which ACL will tap directly into when calling R.
@@ -160,6 +169,8 @@ You have now created the prediction mechanism and the call, which ACL will tap d
 ### Step 5: Within ACL Analytics, create the formula that calls the R script
 
 Almost there! Since the R script has been created, all we need to do within ACL is pass the correct values to R. Each column that we specify in ACL will become a value*x* that gets passed to R. Just like our prediction function, **the order of the columns matter**, so pay attention to which values are being passed into the function.
+
+Within ACL Analytics, use the below in a script to create a computed field called *c_predictedNumberOfWins*:
 
 ```
 OPEN A00_TestingDataset
@@ -172,9 +183,21 @@ DEFINE FIELD c_predictedNumberOfWins COMPUTED RNUMERIC("a<-source('A02_PredictMo
 
 In ACL, add the column to the view, and you’ll hopefully see this pop up:
  
-![Screenshot of ACL image](ACL%20Screenshot%20of%20Called%20Model.PNG?raw=true)
+![Screenshot of ACL image](Step%205%20-%20ACL%20model%20result.PNG?raw=true)
  
 You can see that I specified two decimals, so it has rounded the result to 16.26. But its right on the money as it reflects the expected R result.
+
+Now you have successfully deployed a model in production using R!
+
+## What's next?
+Now that you've deployed and productionized your model, time to continue your thinking about your full audit analytics pipeline. 
+
+* Are you responsible for monitoring the health of a model?
+* Are there any exceptions that are higher than you predicted?
+
+Export them to an exception spreadsheet or upload them into ACL GRC or ACL Results Manager so you can follow up on them with your team, and feed any new findings back to your Data Scientist.
+
+If you're responsible for creating the model, you'll be adding new features all the time. Make sure when you load in a new RDA model, that you also update the value*x* columns that are feeding the function. Whether you make a linear regression or logisitic regression model, you can use the same principles to use ACL Analytics and R to predict outcomes.
 
 ## Troubleshooting
 ```
@@ -185,14 +208,4 @@ Double check your paths in both the R script and ACL code. The full path needs t
 ```
 The R script is not valid. Error detail: Error in UseMethod("predict"): no applicable method for 'predict' applied to an object class of "randomForest"
 ```
-The function built within R, when its called, can't see 'predict'. This is because it has not been loaded. Load it within the function with library(randomForest).
-
-## What's next?
-Now that you've deployed and productionized your model, time to continue your agile thinking about your audit analytics pipeline. 
-
-* Are you responsible for monitoring the health of a model?
-* Are there any exceptions that are higher than you predicted?
-
-Export them to an exception spreadsheet or upload them into ACL GRC or ACL Results Manager so you can follow up on them with your team, and feed any new findings back to your Data Scientist.
-
-If you're responsible for creating the model, you'll be adding new features all the time. Make sure when you load in a new RDA model, that you also update the value*x* columns that are feeding the function. Whether you make a linear regression or logisitic regression model, you can use the same principles to use ACL Analytics and R to predict outcomes.
+The function that we wrote above, when its called from R, can't see the command 'predict'. This is because the predict command has not been loaded. To solve it, ensure that you load the library that calls the function - in our case, we loaded it within the function with command "library(randomForest)". 
