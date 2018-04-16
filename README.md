@@ -22,9 +22,14 @@ I would highly encourage you to install R Studio, and have the latest version of
 
 ![PUBG Logo - Big Explosions](pubg.gif?raw=true)
 
-Rachael’s tutorial concludes with a **trained model** that predicts how often a player will win in a solo match of the video game [PLAYERUNKNOWN’S BATTLEGROUNDS](https://playbattlegrounds.com/).
+Our dataset revolves around the game, [PLAYERUNKNOWN’S BATTLEGROUNDS](https://playbattlegrounds.com/). The game is succiently described as the following:
 
-This is a **regression** problem, which gives a continuous number output. This is different than a classification problem, which is discrete classes leading to a yes/no, true/false, or apple-orange-pineapple outcome. This trained model is saved as the variable *tuned_model* within R, which is designed to predict the field *solo_WinRatio*.
+> 100 players fly over an island and parachute down onto it. You start with no items, but you can scavenge for guns, ammo etc. by searching through buildings. The goal is to be the last man standing. Every x minutes the area you can be in gets smaller, and anyone outside the play area is slowly killed.
+> Source: [Reddit](https://www.reddit.com/r/OutOfTheLoop/comments/6i6pm2/what_is_pubg_and_why_is_everyone_so_excited_about/dj3zm3y/)
+
+Rachael’s tutorial concludes with a **trained model** that predicts **the number of solo matches someone will win, given a certain performance record.** 
+
+This is a **regression** problem, as we are predicting a number within a continuous number output. This is different than a classification problem, which is predicting discrete classes leading to a yes/no, true/false, or apple-orange-pineapple outcome. This trained model is saved as the variable *tuned_model* within R, which is designed to predict the field *solo_WinRatio*.
 
 We need to get R to return a number as an output to ACL. Referencing ACL’s online documentation, we see that the function [RNUMERIC()](https://enablement.acl.com/helpdocs/analytics/13/scripting-guide/en-us/Content/lang_ref/functions/r_rnumeric.htm) will return number that we can use in our analysis. 
 
