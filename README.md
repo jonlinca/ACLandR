@@ -16,7 +16,9 @@ Before you begin, please complete Rachael Tatman’s tutorial, https://www.kaggl
 
 This tutorial focuses on a narrow component of development: the **deployment** of a model. The entire universe of using R to clean data, create features, create models, train models, training vs. test data, understanding over/under fitting etc. is a journey in itself. If you would like to learn how to do those above things, consider starting out with https://www.kaggle.com/learn/r. 
 
-I would highly encourage you to install R Studio, and have the latest version of ACL Analytics (this tutorial has been tested on ACL Analytics 13.0.3). 
+You should also know how to use ACL Analytics, including the creation of custom formulas, importing data and adding columns to a view.
+
+I would highly encourage you to install R Studio and have the latest version of ACL Analytics (this tutorial has been tested on ACL Analytics 13.0.3). 
 
 ## Situtation: Time to deploy your model
 
