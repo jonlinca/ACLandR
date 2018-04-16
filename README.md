@@ -27,7 +27,7 @@ Our dataset revolves around the game, [PLAYERUNKNOWN’S BATTLEGROUNDS](https://
 > 100 players fly over an island and parachute down onto it. You start with no items, but you can scavenge for guns, ammo etc. by searching through buildings. The goal is to be the last man standing. Every x minutes the area you can be in gets smaller, and anyone outside the play area is slowly killed.
 > Source: [Reddit](https://www.reddit.com/r/OutOfTheLoop/comments/6i6pm2/what_is_pubg_and_why_is_everyone_so_excited_about/dj3zm3y/)
 
-Rachael’s tutorial concludes with a **trained model** that predicts **the number of solo matches someone will win, given a certain performance record.** 
+Enough about the game itself. Rachael’s tutorial concludes with a **trained model** that predicts **the number of solo matches someone will win, given a certain performance record.** 
 
 This is a **regression** problem, as we are predicting a number within a continuous number output. This is different than a classification problem, which is predicting discrete classes leading to a yes/no, true/false, or apple-orange-pineapple outcome. This trained model is saved as the variable *tuned_model* within R, which is designed to predict the field *solo_WinRatio*.
 
@@ -167,7 +167,7 @@ testRowOne
 
 ![Test the model on the first row](Step%204%20-%20R%20Model%20result.PNG?raw=true)
 
-It should return 16.259, which is the predicted number of wins for this record. 
+It should return 16.259, which is the predicted number of wins for the first record in the dataset. 
 
 You have now created the prediction mechanism and the call, which ACL will tap directly into when calling R.
 
