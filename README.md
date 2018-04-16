@@ -210,9 +210,12 @@ If you're responsible for creating the model, you'll be adding new features all 
 ```
 The R script is not valid. Error detail: Error in readChar(con, 5L, useBytes = TRUE) : cannot open the connection
 ```
-Double check your paths in both the R script and ACL code. The full path needs to be stated.
+Double check your paths in both the R script and ACL code. The full path needs to be stated. 
+If you are calling paths from R itself, folders should be split with forward slashes, versus how backward slashes are displayed within Windows Explorer.
 
 ```
 The R script is not valid. Error detail: Error in UseMethod("predict"): no applicable method for 'predict' applied to an object class of "randomForest"
 ```
-The function that we wrote above, when its called from R, can't see the command 'predict'. This is because the predict command has not been loaded. To solve it, ensure that you load the library that calls the function - in our case, we loaded it within the function with command "library(randomForest)". 
+The function that we wrote above, when its called from R, is unable to see the command 'predict' at runtime. This is because the predict command was not actively loaded.
+
+To solve it, ensure that you load the library that calls the function - in our case, we loaded it within the function with command "library(randomForest)". You can also load the library itself directly within the console.
